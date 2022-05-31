@@ -19,13 +19,11 @@ class window(Gtk.Window):
         self.icon1 = GdkPixbuf.Pixbuf.new_from_file("logo.png")
         self.image1 = Gtk.Image()
         self.image1.set_from_pixbuf(self.icon1)
-        self.image1.set_hexpand(True)
-        self.image1.set_vexpand(True)
+
         #Buttons
         #inspdf
         inspdf = Gtk.Button(label="Insert PDF")
-        inspdf.set_hexpand(True)
-        inspdf.set_vexpand(True)
+
         #compdf
         compdf = Gtk.Button(label = "Compress")
         compdf.set_hexpand(True)
@@ -33,16 +31,25 @@ class window(Gtk.Window):
         #Radio Buttons
         low = Gtk.RadioButton.new_with_label_from_widget(None, "Low Compression")
         low.connect("clicked", self.on_toggled, "low")
-        low.set_hexpand(True)
-        low.set_vexpand(True)
+
         medium = Gtk.RadioButton.new_with_label_from_widget(low, "Medium Compression")
         medium.connect("clicked", self.on_toggled, "medium")
-        medium.set_hexpand(True)
-        medium.set_vexpand(True)
+
         high = Gtk.RadioButton.new_with_label_from_widget(low, "High Compression")   
         high.connect("clicked", self.on_toggled, "high")
+
+        #expand
+        self.image1.set_hexpand(True)
+        self.image1.set_vexpand(True)
+        inspdf.set_hexpand(True)
+        inspdf.set_vexpand(True)
+        low.set_hexpand(True)
+        low.set_vexpand(True)
+        medium.set_hexpand(True)
+        medium.set_vexpand(True)
         high.set_hexpand(True)
         high.set_vexpand(True)
+        
         #grid stuff
         grid.attach(self.image1, 1, 0, 1, 1)
         grid.attach(inspdf,      1, 1, 1, 1)
