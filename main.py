@@ -1,3 +1,4 @@
+import subprocess
 import gi 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
@@ -23,12 +24,10 @@ class window(Gtk.Window):
         #Buttons
         #inspdf
         inspdf = Gtk.Button(label="Insert PDF")
-
+        inspdf.connect("clicked", self.insert_pdf)
         #compdf
         compdf = Gtk.Button(label = "Compress")
-        compdf.set_hexpand(True)
-        compdf.set_vexpand(True)
-        #Radio Buttons
+                #Radio Buttons
         low = Gtk.RadioButton.new_with_label_from_widget(None, "Low Compression")
         low.connect("clicked", self.on_toggled, "low")
 
@@ -43,6 +42,8 @@ class window(Gtk.Window):
         self.image1.set_vexpand(True)
         inspdf.set_hexpand(True)
         inspdf.set_vexpand(True)
+        compdf.set_hexpand(True)
+        compdf.set_vexpand(True)
         low.set_hexpand(True)
         low.set_vexpand(True)
         medium.set_hexpand(True)
@@ -72,8 +73,43 @@ class window(Gtk.Window):
             pass
 
     def insert_pdf(self, widget):
-        pass
+        dialog = Gtk.FileChooserDialog(
+            title="Please choose a file", parent=self, action=Gtk.FileChooserAction.OPEN
+        )
+        dialog.add_buttons(
+            Gtk.STOCK_CANCEL,
+            Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN,
+            Gtk.ResponseType.OK,
+        )
+
+        self.add_filters(dialog)
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            print("Open clicked")
+            print("File selected: " + dialog.get_filename())
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+
+        dialog.destroy()
+
+    def add_filters(self, dialog):
+        filter_py = Gtk.FileFilter()
+        filter_py.set_name("PDF files")
+        filter_py.add_mime_type("application/pdf")
+        dialog.add_filter(filter_py)
+        """
+        filter_any = Gtk.FileFilter()
+        filter_any.set_name("Any files")
+        filter_any.add_pattern("*")
+        dialog.add_filter(filter_any)
+        """
     def compress(self, widget):
+        
+        #command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
+        #command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
+        #command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
         pass
 
 win = window()
