@@ -47,6 +47,5 @@ if [ $?==0 ]
 then
   python3 success.py
 fi
-
 #Remove Temp
 rm input.txt

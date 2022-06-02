@@ -1,5 +1,7 @@
+import os
 import subprocess
 import gi 
+import time
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
 
@@ -27,15 +29,16 @@ class window(Gtk.Window):
         inspdf.connect("clicked", self.insert_pdf)
         #compdf
         compdf = Gtk.Button(label = "Compress")
-                #Radio Buttons
-        low = Gtk.RadioButton.new_with_label_from_widget(None, "Low Compression")
-        low.connect("clicked", self.on_toggled, "low")
+        compdf.connect("clicked", self.compress_pdf)
+        #Radio Buttons
+        self.low = Gtk.RadioButton.new_with_label_from_widget(None, "Low Compression")
+        self.low.connect("clicked", self.on_toggled, "low")
 
-        medium = Gtk.RadioButton.new_with_label_from_widget(low, "Medium Compression")
-        medium.connect("clicked", self.on_toggled, "medium")
+        self.medium = Gtk.RadioButton.new_with_label_from_widget(self.low, "Medium Compression")
+        self.medium.connect("clicked", self.on_toggled, "medium")
 
-        high = Gtk.RadioButton.new_with_label_from_widget(low, "High Compression")   
-        high.connect("clicked", self.on_toggled, "high")
+        self.high = Gtk.RadioButton.new_with_label_from_widget(self.low, "High Compression")   
+        self.high.connect("clicked", self.on_toggled, "high")
 
         #expand
         self.image1.set_hexpand(True)
@@ -44,55 +47,69 @@ class window(Gtk.Window):
         inspdf.set_vexpand(True)
         compdf.set_hexpand(True)
         compdf.set_vexpand(True)
-        low.set_hexpand(True)
-        low.set_vexpand(True)
-        medium.set_hexpand(True)
-        medium.set_vexpand(True)
-        high.set_hexpand(True)
-        high.set_vexpand(True)
-        
-        #grid stuff
+        self.low.set_hexpand(True)
+        self.low.set_vexpand(True)
+        self.medium.set_hexpand(True)
+        self.medium.set_vexpand(True)
+        self.high.set_hexpand(True)
+        self.high.set_vexpand(True)#grid stuff
         grid.attach(self.image1, 1, 0, 1, 1)
         grid.attach(inspdf,      1, 1, 1, 1)
-        grid.attach(low,         0, 2, 1, 1)
-        grid.attach(medium,      1, 2, 1, 1)
-        grid.attach(high,        2, 2, 1, 1)
+        grid.attach(self.low,    0, 2, 1, 1)
+        grid.attach(self.medium, 1, 2, 1, 1)
+        grid.attach(self.high,   2, 2, 1, 1)
         grid.attach(compdf,      1, 3, 1, 1)
         self.add(grid)
-    
+
+
     def on_toggled(self, widget, compress):
         if widget.get_active():
             state = "on"
             if compress == "low":
-                print("Low")
+                #print("Low")
+                pass
             elif compress == "medium":
-                print("Medium")
+                #print("Medium")
+                pass
             elif compress == "high":
-                print("High")
+                #print("High")
+                pass
         else:
             pass
-
+    def compress_pdf(self, widget):
+        #pass
+        #print(self.on_toggled.level)
+        if self.low.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
+        if self.medium.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
+        if self.high.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
     def insert_pdf(self, widget):
-        dialog = Gtk.FileChooserDialog(
+        self.dialog = Gtk.FileChooserDialog(
             title="Please choose a file", parent=self, action=Gtk.FileChooserAction.OPEN
         )
-        dialog.add_buttons(
+        self.dialog.add_buttons(
             Gtk.STOCK_CANCEL,
             Gtk.ResponseType.CANCEL,
             Gtk.STOCK_OPEN,
             Gtk.ResponseType.OK,
         )
 
-        self.add_filters(dialog)
+        self.add_filters(self.dialog)
 
-        response = dialog.run()
+        response = self.dialog.run()
         if response == Gtk.ResponseType.OK:
             print("Open clicked")
-            print("File selected: " + dialog.get_filename())
+            print("File selected: " + self.dialog.get_filename())
+            x = self.dialog.get_filename()
+            with open('input.txt', 'w') as pdf:
+                pdf.write(x)
+
         elif response == Gtk.ResponseType.CANCEL:
             print("Cancel clicked")
 
-        dialog.destroy()
+        self.dialog.destroy()
 
     def add_filters(self, dialog):
         filter_py = Gtk.FileFilter()
@@ -105,12 +122,6 @@ class window(Gtk.Window):
         filter_any.add_pattern("*")
         dialog.add_filter(filter_any)
         """
-    def compress(self, widget):
-        
-        #command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
-        #command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
-        #command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
-        pass
 
 win = window()
 win.connect("destroy", Gtk.main_quit)
