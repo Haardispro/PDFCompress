@@ -1,7 +1,7 @@
 import os
 import subprocess
+import textwrap
 import gi 
-import time
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
 
@@ -15,7 +15,7 @@ class window(Gtk.Window):
         self.set_border_width(10) 
         
         #Grid
-        grid = Gtk.Grid(row_spacing=10, column_spacing=10)
+        self.grid = Gtk.Grid(row_spacing=10, column_spacing=10)
         self.set_title("PDFCompress")
         self.set_icon_from_file("logo.png")
         #images
@@ -25,8 +25,8 @@ class window(Gtk.Window):
 
         #Buttons
         #inspdf
-        inspdf = Gtk.Button(label="Insert PDF")
-        inspdf.connect("clicked", self.insert_pdf)
+        self.inspdf = Gtk.Button(label="Insert PDF")
+        self.inspdf.connect("clicked", self.insert_pdf)
         #compdf
         compdf = Gtk.Button(label = "Compress")
         compdf.connect("clicked", self.compress_pdf)
@@ -39,12 +39,13 @@ class window(Gtk.Window):
 
         self.high = Gtk.RadioButton.new_with_label_from_widget(self.low, "High Compression")   
         self.high.connect("clicked", self.on_toggled, "high")
-
+        
+        #self.filename = Gtk.Label()
         #expand
         self.image1.set_hexpand(True)
         self.image1.set_vexpand(True)
-        inspdf.set_hexpand(True)
-        inspdf.set_vexpand(True)
+        self.inspdf.set_hexpand(True)
+        self.inspdf.set_vexpand(True)
         compdf.set_hexpand(True)
         compdf.set_vexpand(True)
         self.low.set_hexpand(True)
@@ -53,13 +54,15 @@ class window(Gtk.Window):
         self.medium.set_vexpand(True)
         self.high.set_hexpand(True)
         self.high.set_vexpand(True)#grid stuff
-        grid.attach(self.image1, 1, 0, 1, 1)
-        grid.attach(inspdf,      1, 1, 1, 1)
-        grid.attach(self.low,    0, 2, 1, 1)
-        grid.attach(self.medium, 1, 2, 1, 1)
-        grid.attach(self.high,   2, 2, 1, 1)
-        grid.attach(compdf,      1, 3, 1, 1)
-        self.add(grid)
+        self.grid.attach(self.image1, 1, 0, 1, 1)
+        self.grid.attach(self.inspdf, 1, 1, 1, 1)
+        self.grid.attach(self.low,    0, 3, 1, 1)
+        self.grid.attach(self.medium, 1, 3, 1, 1)
+        self.grid.attach(self.high,   2, 3, 1, 1)
+        self.grid.attach(compdf,      1, 4, 1, 1)
+        #self.grid.attach(self.filename,1, 2, 1, 1)
+        
+        self.add(self.grid)
 
 
     def on_toggled(self, widget, compress):
@@ -100,9 +103,11 @@ class window(Gtk.Window):
 
         response = self.dialog.run()
         if response == Gtk.ResponseType.OK:
-            print("Open clicked")
-            print("File selected: " + self.dialog.get_filename())
             x = self.dialog.get_filename()
+            txt = os.path.basename(x)
+            #wrap = textwrap.fill(txt, 20)
+            self.inspdf.get_children()[0].set_use_markup(True)
+            self.inspdf.get_children()[0].set_label(txt)
             with open('input.txt', 'w') as pdf:
                 pdf.write(x)
 
@@ -110,6 +115,7 @@ class window(Gtk.Window):
             print("Cancel clicked")
 
         self.dialog.destroy()
+       
 
     def add_filters(self, dialog):
         filter_py = Gtk.FileFilter()
