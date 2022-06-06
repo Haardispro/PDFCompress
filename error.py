@@ -1,4 +1,8 @@
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GdkPixbuf
+
+
 
 class MainWindow(Gtk.Window):
     def __init__(self):
@@ -7,7 +11,7 @@ class MainWindow(Gtk.Window):
         grid = Gtk.Grid()
         self.add(grid)
         
-        error = Gtk.Label('Error')
+        error = Gtk.Label()
         error.set_markup("<big>Error</big>")
         
         self.icon1 = GdkPixbuf.Pixbuf.new_from_file("error.png")
