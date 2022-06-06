@@ -2,7 +2,7 @@
 
 This is a GUI Frontend for the terminal utility called ghostscript. 
 
-![image](/home/haard/Desktop/More_Projects/pdfcompress/image.png)
+![image](image.png)
 
 ### Stuff left to add:
 
