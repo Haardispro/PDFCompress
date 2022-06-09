@@ -79,15 +79,7 @@ class window(Gtk.Window):
                 pass
         else:
             pass
-    def compress_pdf(self, widget):
-        #pass
-        #print(self.on_toggled.level)
-        if self.low.get_active():
-            command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
-        if self.medium.get_active():
-            command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
-        if self.high.get_active():
-            command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
+
     def insert_pdf(self, widget):
         self.dialog = Gtk.FileChooserDialog(
             title="Please choose a file", parent=self, action=Gtk.FileChooserAction.OPEN
@@ -103,13 +95,13 @@ class window(Gtk.Window):
 
         response = self.dialog.run()
         if response == Gtk.ResponseType.OK:
-            x = self.dialog.get_filename()
-            txt = os.path.basename(x)
+            self.x = self.dialog.get_filename()
+            txt = os.path.basename(self.x)
             #wrap = textwrap.fill(txt, 20)
-            self.inspdf.get_children()[0].set_use_markup(True)
+            #self.inspdf.get_children()[0].set_use_markup(True)
             self.inspdf.get_children()[0].set_label(txt)
             with open('input.txt', 'w') as pdf:
-                pdf.write(x)
+                pdf.write(self.x)
 
         elif response == Gtk.ResponseType.CANCEL:
             print("Cancel clicked")
@@ -128,9 +120,20 @@ class window(Gtk.Window):
         filter_any.add_pattern("*")
         dialog.add_filter(filter_any)
         """
+    
+    def compress_pdf(self, widget):
+        open_file = self.x        
+        if self.low.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
+        if self.medium.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
+        if self.high.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
+        subprocess.Popen(['xdg-open', '{}'.format(open_file.replace(os.path.basename(open_file), ""))])
+
 
 win = window()
 win.connect("destroy", Gtk.main_quit)
-#win.set_resizable(False)
+win.set_resizable(False)
 win.show_all()
 Gtk.main()
