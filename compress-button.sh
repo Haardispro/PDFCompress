@@ -46,6 +46,8 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
 if [ $?==0 ]
 then
   python3 success.py
+else
+  python3 error.py
 fi
 #Remove Temp
 rm input.txt
