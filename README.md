@@ -28,3 +28,13 @@ python3 main.py
 - [x] Opening the directory of the compressed file after compression
 
 - [ ] Converting the application to GTK4
+
+
+
+### Bugs
+
+- [ ] Ghostscript makes the file bigger instead of making it smaller
+
+- [ ] error.py doesn't open in case of an error
+
+- [ ] Pressing compress on the same instance of the application results in a lot of issues
