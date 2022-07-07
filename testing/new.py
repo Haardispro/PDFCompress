@@ -1,3 +1,4 @@
+
 # Import Libraries
 import os
 import sys
@@ -50,3 +51,8 @@ if __name__ == "__main__":
     input_file = sys.argv[1]
     output_file = sys.argv[2]
     compress_file(input_file, output_file)
+
+
+
+
+
