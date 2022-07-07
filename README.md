@@ -33,7 +33,7 @@ python3 main.py
 
 ### Bugs
 
-- [ ] Ghostscript makes the file bigger instead of making it smaller
+- [ ] Sometimes ghostscript makes the file bigger instead of making it smaller
 
 - [ ] error.py doesn't open in case of an error
 
