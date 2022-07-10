@@ -12,7 +12,7 @@ class MainWindow(Gtk.Window):
         self.add(grid)
         
         error = Gtk.Label()
-        error.set_markup("<big>Error</big>")
+        error.set_markup("<big>Error, no file selected</big>")
         
         self.icon1 = GdkPixbuf.Pixbuf.new_from_file("error.png")
         self.image1 = Gtk.Image()

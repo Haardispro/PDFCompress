@@ -1,5 +1,5 @@
+
 import os
-import os.path
 import subprocess
 import textwrap
 import gi 
@@ -9,10 +9,12 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 
 class window(Gtk.Window):
     def __init__(self):
+        #super().__init__(title="PDFCompress")
         super(window, self).__init__()
         self.init_ui()
     def init_ui(self):
-        self.set_border_width(10)     
+        self.set_border_width(10) 
+        
         #Grid
         self.grid = Gtk.Grid(row_spacing=10, column_spacing=10)
         self.set_title("PDFCompress")
@@ -113,19 +115,22 @@ class window(Gtk.Window):
         filter_py.set_name("PDF files")
         filter_py.add_mime_type("application/pdf")
         dialog.add_filter(filter_py)
+        """
+        filter_any = Gtk.FileFilter()
+        filter_any.set_name("Any files")
+        filter_any.add_pattern("*")
+        dialog.add_filter(filter_any)
+        """
     
     def compress_pdf(self, widget):
-        if os.path.exists("input.txt") == False:
-            os.system("python3 error.py")
-        else:
-            open_file = self.x        
-            if self.low.get_active():
-                command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
-            if self.medium.get_active():
-                command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
-            if self.high.get_active():
-                command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
-            subprocess.Popen(['xdg-open', '{}'.format(open_file.replace(os.path.basename(open_file), ""))])
+        open_file = self.x        
+        if self.low.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-l'])
+        if self.medium.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-x'])
+        if self.high.get_active():
+            command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
+        #subprocess.Popen(['xdg-open', '{}'.format(open_file.replace(os.path.basename(open_file), ""))])
 
 
 win = window()
