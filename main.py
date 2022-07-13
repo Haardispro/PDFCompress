@@ -96,8 +96,6 @@ class window(Gtk.Window):
         if response == Gtk.ResponseType.OK:
             self.x = self.dialog.get_filename()
             txt = os.path.basename(self.x)
-            #wrap = textwrap.fill(txt, 20)
-            #self.inspdf.get_children()[0].set_use_markup(True)
             self.inspdf.get_children()[0].set_label(txt)
             with open('input.txt', 'w') as pdf:
                 pdf.write(self.x)
@@ -126,7 +124,6 @@ class window(Gtk.Window):
             if self.high.get_active():
                 command = subprocess.Popen(['bash', 'compress-button.sh', '-m'])
             subprocess.Popen(['xdg-open', '{}'.format(open_file.replace(os.path.basename(open_file), ""))])
-
 
 win = window()
 win.connect("destroy", Gtk.main_quit)
