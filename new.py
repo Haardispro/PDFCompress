@@ -119,21 +119,12 @@ class window(Gtk.Window):
                 if shutil.which(name):
                     return shutil.which(name)
             raise FileNotFoundError(f'No GhostScript executable was found on path ({"/".join(gs_names)})')
-        def convertTuple(tup):
-            str = ''.join(tup)
-            return str
- 
-        # Driver code
-        #tuple = ('g', 'e', 'e', 'k', 's')
-        #str = convertTuple(tuple)
-        #print(str)
         low_indicator = '/prepress'
         medium_indicator = '/ebook'
         high_indicator = '/screen'
         gs = get_ghostscript_path()
-        input_file_path = self.x      
-        tuple = os.path.splitext(input_file_path[0])# + "_compressed.pdf"
-        output_file_path = convertTuple(tuple) + "_compressed.pdf"
+        input_file_path = self.x     
+        output_file_path = self.x + "_compressed.pdf" 
         if self.low.get_active():
             subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
                     '-dPDFSETTINGS={}'.format(low_indicator),
@@ -142,7 +133,6 @@ class window(Gtk.Window):
                      input_file_path]
             )
         if self.medium.get_active():
-
             subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
                     '-dPDFSETTINGS={}'.format(medium_indicator),
                     '-dNOPAUSE', '-dQUIET', '-dBATCH',
@@ -150,7 +140,6 @@ class window(Gtk.Window):
                      input_file_path]
             )
         if self.high.get_active():
-
             subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
                     '-dPDFSETTINGS={}'.format(high_indicator),
                     '-dNOPAUSE', '-dQUIET', '-dBATCH',
