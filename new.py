@@ -94,7 +94,8 @@ class window(Gtk.Window):
             #with open('input.txt', 'w') as pdf:
              #   pdf.write(self.x)
         elif response == Gtk.ResponseType.CANCEL:
-            print("Cancel clicked")
+            #print("Cancel clicked")
+            pass
         self.dialog.destroy()
        
     def add_filters(self, dialog):
