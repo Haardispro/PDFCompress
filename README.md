@@ -29,12 +29,10 @@ python3 main.py
 
 - [ ] Converting the application to GTK4
 
-
-
 ### Bugs
 
 - [ ] Sometimes ghostscript makes the file bigger instead of making it smaller
 
-- [ ] error.py doesn't open in case of an error
+- [x] error.py doesn't open in case of an error
 
-- [ ] Pressing compress on the same instance of the application results in a lot of issues
+- [x] Pressing compress on the same instance of the application results in a lot of issues
