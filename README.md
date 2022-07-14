@@ -18,7 +18,8 @@ After that cd into the PDFCompress direcory, then run main.py
 
 ```bash
 cd PDFCompress/
-python3 main.py
+python3 main.py #this is the first iteration of the app, lots of bugs
+python3 new.py #new iteration of the app, works fine
 ```
 
 ### Stuff left to add:
@@ -31,7 +32,7 @@ python3 main.py
 
 ### Bugs
 
-- [ ] Sometimes ghostscript makes the file bigger instead of making it smaller
+- [ ] Sometimes ghostscript makes the file bigger instead of making it smaller(cannot be solved)
 
 - [x] error.py doesn't open in case of an error
 
