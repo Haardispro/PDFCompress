@@ -111,8 +111,8 @@ class window(Gtk.Window):
                 if shutil.which(name):
                     return shutil.which(name)
             raise FileNotFoundError(f'No GhostScript executable was found on path ({"/".join(gs_names)})')
-        low_indicator = '/prepress'
-        medium_indicator = '/ebook'
+        low_indicator = '/ebook'
+        medium_indicator = '/default'
         high_indicator = '/screen'
         gs = get_ghostscript_path()
         try: 
