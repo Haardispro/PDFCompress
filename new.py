@@ -34,9 +34,9 @@ class window(Gtk.Window):
         compdf.connect("clicked", self.compress_pdf)
         
         #Radio Buttons
-        self.low = Gtk.RadioButton.new_with_label_from_widget(None, "Low Compression")
+        self.low = Gtk.RadioButton.new_with_label_from_widget(None, "Default Compression")
         self.low.connect("clicked", self.on_toggled, "low")
-        self.medium = Gtk.RadioButton.new_with_label_from_widget(self.low, "Medium Compression")
+        self.medium = Gtk.RadioButton.new_with_label_from_widget(self.low, "Moderate Compression")
         self.medium.connect("clicked", self.on_toggled, "medium")
         self.high = Gtk.RadioButton.new_with_label_from_widget(self.low, "High Compression")   
         self.high.connect("clicked", self.on_toggled, "high")
@@ -139,8 +139,9 @@ class window(Gtk.Window):
                         '-sOutputFile={}'.format(output_file_path),
                         input_file_path]
                 )
-            os.system("python3 success.py")
+
             subprocess.Popen(['xdg-open', '{}'.format(input_file_path.replace(os.path.basename(input_file_path), ""))])
+            subprocess.Popen(["python3", "success.py"])
         except AttributeError:
             os.system("python3 error.py")
 win = window()
