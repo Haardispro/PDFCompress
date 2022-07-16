@@ -9,7 +9,7 @@ class window(Gtk.Window):
         self.main_ui()
     def main_ui(self):
         self.set_title("Success")
-        self.set_border_width(20)
+        self.set_border_width(30)
         self.set_icon_from_file("logo.png")
         
         grid = Gtk.Grid(row_spacing = 10, column_spacing=10)
