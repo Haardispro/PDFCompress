@@ -15,7 +15,7 @@ class window(Gtk.Window):
         grid = Gtk.Grid(row_spacing = 10, column_spacing=10)
 
         heading = Gtk.Label()
-        heading.set_markup("<big>Your file has been compressed successfully ✅</big>")
+        heading.set_markup("<big>       Your file has been\ncompressed successfully ✅</big>")
         
 #        note = Gtk.Label(label="Note:'Low compression' doesn't always compress your pdf.\nUse Medium or High compression instead")
 #        grid.attach(note, 1, 2, 1, 1) 

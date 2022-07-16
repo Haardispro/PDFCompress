@@ -139,9 +139,8 @@ class window(Gtk.Window):
                         '-sOutputFile={}'.format(output_file_path),
                         input_file_path]
                 )
-
+            subprocess.call(["python3", "success.py"])
             subprocess.Popen(['xdg-open', '{}'.format(input_file_path.replace(os.path.basename(input_file_path), ""))])
-            subprocess.Popen(["python3", "success.py"])
         except AttributeError:
             os.system("python3 error.py")
 win = window()
